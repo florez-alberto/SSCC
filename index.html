@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence Space Coverage Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Ionicons for modern icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <ion-icon name="flask-outline"></ion-icon>
+                <h1>Sequence Space Coverage Calculator</h1>
+            </div>
+            <p>Compute expected probabilities & capacity limits for saturation mutagenesis experiments.</p>
+        </header>
+
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tab-s">Compute Required S</button>
+                <button class="tab-btn" data-tab="tab-tk">Compute Coverage T<sub>k</sub></button>
+                <button class="tab-btn" data-tab="tab-maxl">Compute Max L</button>
+            </div>
+
+            <div class="glass-panel">
+                
+                <!-- TAB: Compute Required S -->
+                <div class="tab-content active" id="tab-s">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Target Probability (T<sub>k</sub>)</label>
+                            <input type="number" id="s_prob" value="0.99" min="0" max="1" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>Target Variants (k)</label>
+                            <input type="text" id="s_k" value="10" placeholder="Number or 'Full'">
+                        </div>
+                    </div>
+                    <div class="blocks-editor">
+                        <h3>Sequence Design (Randomised Positions)</h3>
+                        <div id="s_blocks_container" class="blocks-container"></div>
+                        <button class="action-btn outline btn-add-block" data-target="s_blocks_container">
+                            <ion-icon name="add-circle-outline"></ion-icon> Add Block
+                        </button>
+                    </div>
+                    <div class="action-bar">
+                        <button class="action-btn primary" id="btn_calc_s">Calculate Required S</button>
+                    </div>
+                    <div class="result-box" id="res_s" style="display: none;"></div>
+                </div>
+
+                <!-- TAB: Compute Coverage Tk -->
+                <div class="tab-content" id="tab-tk">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Library Size (S)</label>
+                            <input type="text" id="tk_s" value="1e8" placeholder="e.g. 1e8 or 1000000">
+                        </div>
+                        <div class="input-group">
+                            <label>Target Variants (k)</label>
+                            <input type="number" id="tk_k" value="10" min="1">
+                        </div>
+                    </div>
+                    <div class="blocks-editor">
+                        <h3>Sequence Design (Randomised Positions)</h3>
+                        <div id="tk_blocks_container" class="blocks-container"></div>
+                        <button class="action-btn outline btn-add-block" data-target="tk_blocks_container">
+                            <ion-icon name="add-circle-outline"></ion-icon> Add Block
+                        </button>
+                    </div>
+                    <div class="action-bar">
+                        <button class="action-btn primary" id="btn_calc_tk">Calculate Coverage T<sub>k</sub></button>
+                    </div>
+                    <div class="result-box" id="res_tk" style="display: none;"></div>
+                </div>
+
+                <!-- TAB: Compute Max L -->
+                <div class="tab-content" id="tab-maxl">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Library Size (S)</label>
+                            <input type="text" id="ml_s" value="1e8" placeholder="e.g. 1e8">
+                        </div>
+                        <div class="input-group">
+                            <label>Target Probability (T<sub>k</sub>)</label>
+                            <input type="number" id="ml_prob" value="0.99" min="0" max="1" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>Target Variants (k)</label>
+                            <input type="number" id="ml_k" value="10" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Codon Scheme</label>
+                            <select id="ml_scheme">
+                                <option value="NNN">NNN</option>
+                                <option value="NNS" selected>NNK/NNS</option>
+                                <option value="DKS">DKS</option>
+                                <option value="MAX">MAX</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-bar">
+                        <button class="action-btn primary" id="btn_calc_maxl">Calculate Max L</button>
+                    </div>
+                    <div class="result-box" id="res_maxl" style="display: none;"></div>
+                </div>
+
+                <!-- Instructions / Legend Section -->
+                <div class="instructions-panel glass-panel">
+                    <div class="instructions-header" id="instructions-toggle">
+                        <h2>Instructions & Definitions</h2>
+                        <ion-icon name="chevron-down-outline"></ion-icon>
+                    </div>
+                    <div class="instructions-content" id="instructions-content" style="display: none;">
+                        <p>This tool calculates the required parameters for saturation mutagenesis libraries based on Poisson statistics.</p>
+                        <ul class="definitions-list">
+                            <li><strong>S (Library Size)</strong>: The experimental library size. For instance, the total number of transformants or generated sequences.</li>
+                            <li><strong>T<sub>k</sub> (Target Probability)</strong>: The required probability (or confidence level) of sampling at least <em>k</em> variants. Typically 0.95 or 0.99.</li>
+                            <li><strong>k (Target Variants)</strong>: The number of times you want to observe each variant in the theoretical sequence space. Setting this to 'Full' requires observing all theoretical variants.</li>
+                            <li><strong>L (Max Sequence Length)</strong>: The maximum number of randomized codon positions that can be explored under the given parameters.</li>
+                            <li><strong>Codon Scheme</strong>: The randomization strategy used at each position (e.g., NNN, NNS/NNK, DKS, MAX).</li>
+                            <li><strong>Sequence Design (Blocks)</strong>: Allows you to define a library with multiple groups of randomized positions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- The Block Template for JS insertion -->
+    <template id="block-template">
+        <div class="scheme-block">
+            <select class="block-scheme">
+                <option value="NNN">NNN</option>
+                <option value="NNS" selected>NNK/NNS</option>
+                <option value="DKS">DKS</option>
+                <option value="MAX">MAX</option>
+            </select>
+            <div class="block-pos">
+                <input type="number" class="block-count" min="1" value="4">
+                <span>positions</span>
+            </div>
+            <button class="btn-remove-block"><ion-icon name="trash-outline"></ion-icon></button>
+        </div>
+    </template>
+
+    <script src="calculator.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
