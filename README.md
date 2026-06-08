@@ -12,4 +12,3 @@ A lightweight, self-contained web tool to compute expected probabilities and cap
 ## Usage
 
 This tool is designed to be easily opened in a browser by double-clicking the `index.html` file. 
-
