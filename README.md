@@ -1,3 +1,6 @@
+[![Live Demo](https://img.shields.io/badge/Live-Web%20App-brightgreen)](https://florez-alberto.github.io/SSCC/)
+[![Preprint](https://img.shields.io/badge/bioRxiv-10.64898%2F2026.06.15.729752-blue)](https://www.biorxiv.org/content/10.64898/2026.06.15.729752v1)
+[![License](https://img.shields.io/badge/license-MIT-green)](#)
 # Sequence Space Coverage Calculator
 
 A lightweight, self-contained web tool to compute expected probabilities and capacity limits for directed evolution experiments. 
@@ -12,3 +15,4 @@ A lightweight, self-contained web tool to compute expected probabilities and cap
 ## Usage
 
 This tool is designed to be easily opened in a browser by double-clicking the `index.html` file. 
+
