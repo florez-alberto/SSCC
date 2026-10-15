@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite both the software and the paper."
+title: "SSCC: Sequence Space Coverage Calculator"
+type: software
+authors:
+  - family-names: "Florez Prada"
+    given-names: "Alberto"
+    orcid: "https://orcid.org/0000-0002-9520-6401"
+  - family-names: "Uguzzoni"
+    given-names: "Guido"
+    orcid: "https://orcid.org/0000-0003-4192-2864"
+  - family-names: "Hart"
+    given-names: "Darren J."
+    orcid: "https://orcid.org/0000-0002-3502-2002"
+repository-code: "https://github.com/florez-alberto/SSCC"
+url: "https://florez-alberto.github.io/SSCC/"
+license: CC-BY-4.0
+keywords:
+  - protein engineering
+  - directed evolution
+  - mutagenesis
+  - sequence space
+  - library design
+preferred-citation:
+  type: article
+  title: "Calculation of sequence space coverage in a mutagenesis library"
+  authors:
+    - family-names: "Florez Prada"
+      given-names: "Alberto"
+      orcid: "https://orcid.org/0000-0002-9520-6401"
+    - family-names: "Uguzzoni"
+      given-names: "Guido"
+      orcid: "https://orcid.org/0000-0003-4192-2864"
+    - family-names: "Hart"
+      given-names: "Darren J."
+      orcid: "https://orcid.org/0000-0002-3502-2002"
+  journal: "bioRxiv"
+  doi: "10.64898/2026.06.15.729752"
+  year: 2026
