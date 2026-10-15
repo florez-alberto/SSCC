@@ -181,7 +181,7 @@ function solve_S_dist(target_prob, kStr, dist, n_eff) {
     
     try {
         const logS = find_zero(get_prob, lower_bound, upper_bound);
-        return Math.pow(10, logS);
+        return Math.ceil(Math.pow(10, logS));
     } catch (e) {
         return -2;
     }
